@@ -36,7 +36,7 @@
     const x0 = Math.floor((e.x - w2 + 1) / TILE), x1 = Math.floor((e.x + w2 - 1) / TILE);
     if (e.vy >= 0) {
       const ta = Math.ceil((e.y - 0.01) / TILE), tb = Math.floor(ny / TILE);
-      land: for (let ty = ta; ty <= tb; ty++) for (let tx = x0; tx <= x1; tx++) { const t = this.tile(tx, ty); if (t === 1 || t === 2) { ny = ty * TILE; e.vy = 0; out.ground = true; break land; } }
+      land: for (let ty = ta; ty <= tb; ty++) for (let tx = x0; tx <= x1; tx++) { const t = this.tile(tx, ty); if (e.dropRow === ty && t === 2) continue; if (t === 1 || t === 2) { ny = ty * TILE; e.vy = 0; out.ground = true; break land; } }
     } else {
       const ty = Math.floor((ny - e.h) / TILE);
       for (let tx = x0; tx <= x1; tx++) if (this.tile(tx, ty) === 1) { ny = (ty + 1) * TILE + e.h + 0.01; e.vy = 0; out.hitHead = true; break; }
@@ -95,6 +95,16 @@
     if (this.tile(Math.floor((b.x + P.face * 6) / TILE), Math.floor(b.y / TILE)) === 1) b.vx = 0;   // blowing straight into a wall just pops a stationary bubble
     this.bubbles.push(b); snd('blow');
   };
+  /* Down + jump: sink through the one-way platform underfoot (never the floor strip, which has solid rock under it) */
+  Game.dropDown = function (P) {
+    const ty = Math.round(P.y / TILE);
+    if (Math.abs(P.y - ty * TILE) > 0.6 || ty >= ROWS - 2) return false;
+    let plat = false;
+    for (let tx = Math.floor((P.x - 5) / TILE); tx <= Math.floor((P.x + 5) / TILE); tx++) { const t = this.tile(tx, ty); if (t === 1) return false; if (t === 2) plat = true; }
+    if (!plat) return false;
+    P.dropRow = ty; P.ground = false; P.coyote = 0; P.vy = 30; P.jumpBuf = 0; P.y += 1; snd('blip');
+    return true;
+  };
   Game.updatePlayer = function (dt, I) {
     const P = this.P;
     if (P.blowT > 0) P.blowT -= dt;
@@ -108,7 +118,7 @@
     }
     const spd = MOVE * (this.perks.speed > 0 ? 1.4 : 1), want = (I.r ? 1 : 0) - (I.l ? 1 : 0);
     if (want) { P.face = want; P.vx = want * spd; P.anim += dt * 9; } else { P.vx = 0; }
-    if (I.takeJump()) P.jumpBuf = 0.1;
+    if (I.takeJump()) { if (!(I.down && P.ground && !P.bubbleRide && this.dropDown(P))) P.jumpBuf = 0.1; }
     if (P.jumpBuf > 0) P.jumpBuf -= dt;
     if (P.jumpBuf > 0 && (P.ground || P.coyote > 0)) { P.vy = JUMP * (this.lowg(P.x, P.y) ? 1.25 : 1); P.ground = false; P.coyote = 0; P.jumpBuf = 0; snd('jump'); P.bubbleRide = null; }
     if (!I.jump && P.vy < -90) P.vy = -90 + (P.vy + 90) * 0.4;   // let go early for a shorter hop
@@ -118,6 +128,7 @@
     if (!P.bubbleRide) P.ground = mv.ground; else P.coyote = 0.08;
     if (P.ground) P.coyote = 0.08; else if (P.coyote > 0) P.coyote -= dt;
     if (P.wrapped) { P.wrapped = false; }
+    if (P.dropRow != null && P.y > P.dropRow * TILE + 3) P.dropRow = null;
     // touching aliens kills
     if (P.invuln <= 0) for (const f of this.foes) if ((f.state === 'walk' || f.state === 'angry') && Math.abs(f.x - P.x) < (f.w + P.w) / 2 - 2 && Math.abs((f.y - f.h / 2) - (P.y - P.h / 2)) < (f.h + P.h) / 2 - 2) { this.killPlayer(); break; }
     if (P.invuln <= 0 && !P.dead) for (const s of this.shots) if (s.harm && Math.abs(s.x - P.x) < (s.r + P.w / 2) && Math.abs(s.y - (P.y - P.h / 2)) < (s.r + P.h / 2)) { this.killPlayer(); s.dead = true; break; }

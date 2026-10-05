@@ -28,7 +28,7 @@
     const logo = h('h1', 'logo', [PX.logoImage('SPACE', 5, ['#ffffff', '#dce8ff', '#b0c4f0', '#86a0dc', '#6280c4', '#46629e', '#2e4478'], 2, '#141c44'), PX.logoImage('BOBBLE', 10, ['#e8fbff', '#9ae8ff', '#4ac8ff', '#2a8ae8', '#2a5ad0', '#4a2ab8', '#2a1a78'], 2, '#0a0a38')], { 'aria-label': 'SpaceBobble' });
     logo.querySelectorAll('canvas').forEach((c) => { c.className = 'plogo'; });
     screen('title', [logo, h('p', 'tag', 'Blow bubbles. Pop aliens. Save the station.'), menu([btn('PLAY', () => nav('diff'), { primary: true }), btn('HIGH SCORES', () => nav('scores')), btn('SETTINGS', () => nav('settings'))]),
-      h('p', 'hint', [h('b', '', 'Arrows/WASD'), ' move  ', h('b', '', 'Space/Z/Up'), ' jump  ', h('b', '', 'X/J'), ' blow a bubble  ', h('b', '', 'P'), ' pause  (gamepads work too)']),
+      h('p', 'hint', [h('b', '', 'Arrows/WASD'), ' move  ', h('b', '', 'Space/Z/Up'), ' jump  ', h('b', '', 'Down+jump'), ' drop  ', h('b', '', 'X/J/click'), ' blow a bubble  ', h('b', '', 'P'), ' pause  (gamepads work too)']),
       h('footer', 'credit', ['Free to play and share · ', h('a', '', 'github.com/nbwillcox/SpaceBobble', { href: C.REPO, target: '_blank', rel: 'noopener' }), ' · ', h('a', '', 'CC BY-NC 4.0', { href: 'https://creativecommons.org/licenses/by-nc/4.0/', target: '_blank', rel: 'noopener' })])]);
     screen('diff', [heading('DIFFICULTY'), menu(C.DIFF.map((d, i) => btn(d.name, () => G.main.startGame(i), { primary: i === 1, hint: d.hint }))), h('p', 'hint', 'Normal is the classic balance.', { id: 'diffhint' }), menu([btn('BACK', goBack)])]);
     screen('scores', [heading('HIGH SCORES'), h('div', 'rbody', '', { id: 'scorebody' }), menu([btn('BACK', goBack, { primary: true })])]);

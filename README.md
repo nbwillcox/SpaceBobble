@@ -12,7 +12,8 @@ Everything is generated in code: all sprites, tiles and backdrops are pixel art 
 | --- | --- | --- |
 | Move | `←` `→` or `A` `D` | left stick / d-pad |
 | Jump | `Space`, `Z`, `K`, `↑` or `W` | `A` / `B` |
-| Blow a bubble | `X`, `J`, `L` or `Shift` | `X` / `Y` / `RB` |
+| Drop down a level | `↓` or `S` + jump | stick / d-pad down + `A` |
+| Blow a bubble | `X`, `J`, `L`, `Shift` or left mouse click (hold to keep blowing) | `X` / `Y` / `RB` |
 | Pause | `P` or `Esc` | `Start` |
 
 Menus work with the arrow keys and `Enter`, the mouse, or a gamepad. The playfield stretches to the window: ultrawide screens simply get a wider room (up to 80 columns).
