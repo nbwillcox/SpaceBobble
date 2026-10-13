@@ -18,6 +18,10 @@ Everything is generated in code: all sprites, tiles and backdrops are pixel art 
 
 Menus work with the arrow keys and `Enter`, the mouse, or a gamepad. The playfield stretches to the window: ultrawide screens simply get a wider room (up to 80 columns).
 
+### On a phone or tablet
+
+Play in landscape. A floating stick on the left runs (down plus jump drops through a platform); **JUMP** and **BLOW** are on the right. The pause button opens the menu. The on-screen controls appear on touch devices automatically; Settings has size, opacity and a left-handed layout. Use your browser's *Add to Home Screen* to install it as a full-screen app.
+
 ## How to play
 
 - **Blow bubbles at aliens** to trap them. A trapped alien floats up and, if you wait too long, bursts free and comes back **angry** (faster). Touch the bubble first to pop it: the alien turns into a space snack worth points, and chain-popping aliens multiplies the bonus.
