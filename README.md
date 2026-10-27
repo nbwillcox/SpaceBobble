@@ -22,6 +22,10 @@ Menus work with the arrow keys and `Enter`, the mouse, or a gamepad. The playfie
 
 Play in landscape. A floating stick on the left runs (down plus jump drops through a platform); **JUMP** and **BLOW** are on the right. The pause button opens the menu. The on-screen controls appear on touch devices automatically; Settings has size, opacity and a left-handed layout. Use your browser's *Add to Home Screen* to install it as a full-screen app.
 
+### Controller
+
+Plug in a gamepad and it just works: the stick or D-pad runs, **A** jumps, **X / B / RT** blows a bubble, **Start** pauses. In menus the D-pad / left stick moves the highlight, **A** selects, **B** goes back and **Start** plays or resumes. **Settings -> Controller** has a dead-zone slider and lets you remap every button.
+
 ## How to play
 
 - **Blow bubbles at aliens** to trap them. A trapped alien floats up and, if you wait too long, bursts free and comes back **angry** (faster). Touch the bubble first to pop it: the alien turns into a space snack worth points, and chain-popping aliens multiplies the bonus.
